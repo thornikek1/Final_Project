@@ -2,9 +2,9 @@ def get_float_input(prompt):
   """Gets a valid float input from the user."""
   while True:
     try:
-      value = float(input(prompt))
+      value = eval(input(prompt))
       return value
-    except ValueError:
+    except (ValueError, NameError, SyntaxError):
       print("Invalid input. Please enter a number.")
 
 def choose_operation():
@@ -30,6 +30,10 @@ def perform_calculation(num1, operation, num2):
       if num2 == 0:
         raise ZeroDivisionError
       else:
+        if (type(num1) == int and type(num2) == int and
+            num1 % num2 == 0):
+          return int(num1 / num2)
+        
         return num1 / num2
     else:
       raise ValueError("Internal error: invalid operation")
